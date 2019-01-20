@@ -1,25 +1,55 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import firebase from './firestore.js';
+
+var db = firebase.firestore();
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currentWeek: '',
+      monday: [],
+      tuesday: []
+    }
+
+    this.handleClaimSlot = this.handleClaimSlot.bind(this);
+  }
+
+  componentDidMount() {
+    db.collection("2019").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const slots = doc.data().slots;
+            this.setState({
+              [doc.id]: slots
+            });
+        });
+    });
+  }
+
+  handleClaimSlot(day, timeSlot, apt) {
+    const slotAvailable = !this.state[day][timeSlot];
+
+    if (slotAvailable) {
+      console.log('Slot available!');
+      // const dayOfWeek = db.collection('2019').doc(day);
+      //
+      // return dayOfWeek.update({
+      //   slots: firebase.firestore.FieldValue.arrayUnion({
+      //     apartment: apt,
+      //     timeSlot
+      //   })
+      // });
+    } else {
+      console.log('Sorry slot taken');
+    }
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <button onClick={() => this.handleClaimSlot('tuesday', '6:30', 4545)}>Assign Slot Monday 6:30</button>
       </div>
     );
   }
