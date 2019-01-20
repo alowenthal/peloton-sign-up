@@ -49,7 +49,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.handleClaimSlot('tuesday', '6:30', 4545)}>Assign Slot Monday 6:30</button>
+        <button onClick={() => this.handleClaimSlot('monday', '6:30', 4545)}>Assign Slot Monday 6:30</button>
       </div>
     );
   }
