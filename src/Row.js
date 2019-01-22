@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import Timeslot from './Timeslot.js';
 
-const Row = ({ day, timeslots, handleClaimSlot }) => {
-  const timeslotsMarkup = timeslots.map((timeslot) => <Timeslot day={day} timeslot={timeslot} handleClaimSlot={handleClaimSlot} />);
+const Row = ({ day, timeslots }) => {
+  const timeslotsMarkup = timeslots.map((timeslot) => <Timeslot day={day} timeslot={timeslot} />);
 
   return (
     <React.Fragment>

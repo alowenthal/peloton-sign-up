@@ -1,11 +1,8 @@
 import React from 'react';
 import './App.scss';
-import firebase from './firestore.js';
 
 import Row from './Row.js';
 import { Provider } from './context/Global';
-
-const db = firebase.firestore();
 
 export default class App extends React.Component {
   constructor() {
@@ -60,45 +57,12 @@ export default class App extends React.Component {
       ],
       slotsStatus: []
     }
-
-    this.handleClaimSlot = this.handleClaimSlot.bind(this);
-  }
-
-  componentDidMount() {
-    this.getLatestData();
-  }
-
-  getLatestData() {
-    db.collection("2019").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const slots = doc.data();
-          this.setState({
-            [doc.id]: slots
-          });
-        });
-    });
-  }
-
-  handleClaimSlot(day, timeSlot, apt) {
-    const slotAvailable = !this.state[day][timeSlot];
-
-    if (slotAvailable) {
-      this.getLatestData();
-
-      const dayOfWeek = db.collection('2019').doc(day);
-
-      return dayOfWeek.update({
-        [timeSlot]: apt
-      });
-    } else {
-      console.log('Sorry slot taken');
-    }
   }
 
   render() {
     const { daysOfWeek, timeSlotsAvail } = this.state;
 
-    const weekMarkup = daysOfWeek.map((day) => <Row day={day} timeslots={timeSlotsAvail} handleClaimSlot={this.handleClaimSlot} />);
+    const weekMarkup = daysOfWeek.map((day) => <Row day={day} timeslots={timeSlotsAvail} />);
     const timeslotsMarkup = timeSlotsAvail.map((timeslot) => <li>{timeslot}</li>);
 
     return (

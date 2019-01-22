@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Consumer } from './context/Global';
 
-const Timeslot = ({ day, timeslot, handleClaimSlot }) => {
+const Timeslot = ({ day, timeslot }) => {
   const cellClasses = classnames({
     row__cell: true
   });
 
   return (
     <Consumer>
-      {({ test }) => {
+      {({ handleClaimSlot }) => {
         return (
           <button
             className={cellClasses}
