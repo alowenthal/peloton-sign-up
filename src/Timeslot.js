@@ -5,17 +5,19 @@ import classnames from 'classnames';
 import { Consumer } from './context/Global';
 
 const Timeslot = ({ day, timeslot }) => {
-  const cellClasses = classnames({
-    row__cell: true
-  });
-
   return (
     <Consumer>
-      {({ handleClaimSlot }) => {
+      {({ handleClaimSlot, isSlotTaken }) => {
+        const cellClasses = classnames({
+          row__cell: true,
+          taken: () => isSlotTaken(day, timeslot)
+        });
+
         return (
           <button
             className={cellClasses}
             onClick={() => handleClaimSlot(day, timeslot, 1202)}
+            disabled={() => isSlotTaken(day, timeslot)}
           >
             {timeslot}
           </button>
