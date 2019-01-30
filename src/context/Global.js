@@ -12,7 +12,8 @@ class Provider extends React.Component {
 
     this.state = {
       handleClaimSlot: this.handleClaimSlot.bind(this),
-      isSlotTaken: this.isSlotTaken.bind(this)
+      isSlotTaken: this.isSlotTaken.bind(this),
+      initFetch: false
     };
   }
 
@@ -25,14 +26,16 @@ class Provider extends React.Component {
         querySnapshot.forEach((doc) => {
           const slots = doc.data();
           this.setState({
-            [doc.id]: slots
+            [doc.id]: slots,
+            initFetch: true
           });
         });
     });
   }
 
   isSlotTaken(day, timeSlot) {
-    const slotAvailable = !this.state[day][timeSlot];
+    const _day = this.state[day];
+    const slotAvailable = !_day ? false : _day[timeSlot];
 
     if (slotAvailable) {
       return true;

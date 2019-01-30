@@ -47,6 +47,11 @@ $offset: 120px;
 		align-items: center;
 		justify-content: center;
 
+        &.taken {
+            background: green;
+            color: white;
+        }
+
     &:hover {
       background: darken(#ffeaa7, 10%);
     }
